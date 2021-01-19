@@ -30,7 +30,9 @@ class Config(object):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
-        value = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+
+        value = 'sqlite:///db.sqlite' 
+        # f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
 
         if not value:
             raise ValueError("DB_URI is not set")

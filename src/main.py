@@ -21,9 +21,11 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
+    from models.User import User
+    
     @login_manager.user_loader
     def load_user(user_id):
-        return None
+        return User.query.get(int(user_id))
 
     from controllers import registerable_controllers
     for controller in registerable_controllers:
