@@ -1,0 +1,20 @@
+<!-- templates/journal_entries.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+    {% for journal_entry in journal_entries %}
+    <li>
+        <div>
+            {% if journal_entry %}
+                {{ journal_entry.journal_entry }}
+                {{ journal_entry.journal_date }}
+            {% else %}
+                <p> No entries </p>
+            {% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
