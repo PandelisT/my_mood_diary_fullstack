@@ -13,7 +13,6 @@ journal = Blueprint("journal", __name__, url_prefix="/journal")
 @login_required
 def journal_entry_create():
     form = AddJournalEntryForm()
-    print(form.validate_on_submit())
     if form.validate_on_submit():
         journal = Journal()
         journal.journal_entry = form.journal_entry.data
@@ -31,3 +30,16 @@ def get_journal_entries():
     user = user_id.id
     journal_entries = Journal.query.filter_by(user_id_fk=user).all()
     return render_template('journal_entries.html', journal_entries=journal_entries)
+
+
+@journal.route("/journal_entries/<int:journal_id>", methods=["POST"])
+@login_required
+def delete_journal_entry(journal_id):
+    user_id = current_user._get_current_object()
+    user = user_id.id
+    print(user)
+    journal_entry = Journal.query.filter_by(user_id_fk=user, id=journal_id).first()
+    print(journal_entry)
+    db.session.delete(journal_entry)
+    db.session.commit()
+    return redirect(url_for('journal.get_journal_entries'))
