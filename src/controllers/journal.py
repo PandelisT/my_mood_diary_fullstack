@@ -28,7 +28,7 @@ def journal_entry_create():
 def get_journal_entries():
     user_id = current_user._get_current_object()
     user = user_id.id
-    journal_entries = Journal.query.filter_by(user_id_fk=user).all()
+    journal_entries = Journal.query.filter_by(user_id_fk=user).order_by(Journal.journal_date.desc()).all()
     return render_template('journal_entries.html', journal_entries=journal_entries, name=current_user.name)
 
 
@@ -43,3 +43,34 @@ def delete_journal_entry(journal_id):
     db.session.delete(journal_entry)
     db.session.commit()
     return redirect(url_for('journal.get_journal_entries'))
+
+
+@journal.route("/journal_entries/update/<int:journal_id>", methods=["POST"])
+@login_required
+def update_journal_entry(journal_id):
+    form = AddJournalEntryForm()
+    user_id = current_user._get_current_object()
+    user = user_id.id
+    update_journal_entry = Journal.query.filter_by(user_id_fk=user, id=journal_id).first()
+    update_journal_entry.journal_entry = form.journal_entry.data
+    print(update_journal_entry.journal_entry)
+    db.session.commit()
+    return redirect(url_for('journal.get_journal_entries'))
+
+
+# @app.route('/item/<int:id>', methods=['GET', 'POST'])
+# def edit(id):
+#     qry = db_session.query(Album).filter(
+#                 Album.id==id)
+#     album = qry.first()
+#     if album:
+#         form = AlbumForm(formdata=request.form, obj=album)
+#         if request.method == 'POST' and form.validate():
+#             # save edits
+#             save_changes(album, form)
+#             flash('Album updated successfully!')
+#             return redirect('/')
+#         return render_template('edit_album.html', form=form)
+#     else:
+#         return 'Error loading #{id}'.format(id=id)
+# </int:id>
