@@ -29,7 +29,7 @@ def get_journal_entries():
     user_id = current_user._get_current_object()
     user = user_id.id
     journal_entries = Journal.query.filter_by(user_id_fk=user).all()
-    return render_template('journal_entries.html', journal_entries=journal_entries)
+    return render_template('journal_entries.html', journal_entries=journal_entries, name=current_user.name)
 
 
 @journal.route("/journal_entries/<int:journal_id>", methods=["POST"])
