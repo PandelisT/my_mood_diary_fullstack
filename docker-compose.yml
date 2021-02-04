@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+  database:
+    container_name: flask_postgres_mood_app
+    image: postgres:latest
+    env_file: .env
+    volumes:
+      - type: volume
+        source: flask_postgres_data
+        target: /var/lib/postgresql/data
+    networks:
+      - flask_app_network_mood
+  flask:
+    container_name: flask_mood_app
+    build: .
+    image: flask_mood_app
+    env_file: .env
+    ports:
+      - "5000:5000"
+    networks:
+      - flask_app_network_mood
+    volumes:
+      - type: bind
+        source: ./src
+        target: /code
+    command: wait-for-it flask_postgres:5432 -- flask run -h 0.0.0.0
+    depends_on:
+      - database
+      - migration
+  migration:
+    build: .
+    image: flask_mood_app
+    env_file: .env
+    networks:
+      - flask_app_network_mood
+    command:  wait-for-it flask_postgres:5432 -- flask db upgrade
+    depends_on:
+      - database
+volumes:
+  flask_postgres_data:
+    name: flask_postgres_data_mood
+networks:
+  flask_app_network_mood:
+    name: flask_app_network_mood
+    driver: bridge

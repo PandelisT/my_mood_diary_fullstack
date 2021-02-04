@@ -6,11 +6,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
 from flask_wtf import CsrfProtect
+from flask_migrate import Migrate
 
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 csrf = CsrfProtect()
+migrate = Migrate()
+
 
 def create_app():
     app = Flask(__name__)
@@ -20,6 +23,7 @@ def create_app():
 
     db.init_app(app)
     csrf.init_app(app)
+    migrate.init_app(app, db)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -30,6 +34,9 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    from commands import db_commands
+    app.register_blueprint(db_commands)
 
     from controllers import registerable_controllers
     for controller in registerable_controllers:
