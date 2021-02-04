@@ -5,9 +5,12 @@ load_dotenv()
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
+from flask_wtf import CsrfProtect
+
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
+csrf = CsrfProtect()
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +19,7 @@ def create_app():
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
     db.init_app(app)
+    csrf.init_app(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

@@ -1,5 +1,5 @@
-from models.Journal import Journal
 from main import db
+from models.Journal import Journal
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from models.User import User
 from flask_login import login_user, logout_user, login_required, current_user
@@ -53,7 +53,6 @@ def update_journal_entry(journal_id):
     user = user_id.id
     update_journal_entry = Journal.query.filter_by(user_id_fk=user, id=journal_id).first()
     update_journal_entry.journal_entry = form.journal_entry.data
-    print(update_journal_entry.journal_entry)
     db.session.commit()
     return redirect(url_for('journal.get_journal_entries'))
 

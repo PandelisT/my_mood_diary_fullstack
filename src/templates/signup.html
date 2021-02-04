@@ -13,7 +13,9 @@
             </div>
         {% endif %}
         {% endwith %}
-        <form method="POST" action="/signup">
+        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+        <form action="{{ url_for('auth.signup_post') }}"  method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="field">
                 <div class="control">
                     <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">

@@ -6,31 +6,33 @@
 
 <h1  class="title is-1 is-spaced"> List of all {{ name }}'s journal entries</h1>
 
-    {% for journal_entry in journal_entries %}
-        <div >
-            {% if journal_entry %}
-                <ul>
-                    {{ journal_entry.journal_entry }}
-                    Date of entry:
-                    {{ journal_entry.journal_date.strftime('%d-%m-%Y') }}
-                    <div class="buttons is-centered">
-                    <form method="POST" action="{{ url_for('journal.update_journal_entry', journal_id=journal_entry.id) }}">
-                            <div class="field">
-                                <div class="control">
-                                    <textarea class="text" name="journal_entry" placeholder="Edit journal entry"></textarea>
-                                </div>
-                            </div>
-                            <button class="button is-block is-info is-large is-fullwidth">Edit entry</button>
-                    <form action="{{ url_for('journal.delete_journal_entry', journal_id=journal_entry.id) }}" method=post>
-                        <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
-                    </form>
-                    </div>
-                </ul>
-            {% else %}
-                <p> No entries </p>
-            {% endif %}
+{% for journal_entry in journal_entries %}
+<div class="box">
+<div class="columns">
+    <div class="column">
+        {{ journal_entry.journal_entry }}
+    </div>
+    <div class="column">
+             Date of entry:
+             {{ journal_entry.journal_date.strftime('%d-%m-%Y') }}
         </div>
-    {% endfor %}
+    <div class="column">
+        <form action="{{ url_for('journal.update_journal_entry', journal_id=journal_entry.id) }}" method="POST">
+                    <input class="input" type="text" name="journal_entry" value="{{ journal_entry.journal_entry }}">
+                    <button class="button is-block is-info is-medium">Edit entry</button>
+        </form>
+    </div>
+    <div class="column">
+        <form action="{{ url_for('journal.delete_journal_entry', journal_id=journal_entry.id) }}" method="POST">
+            <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
+        </form>
+    </div>
+  </div>
+</div>
+
+  {% endfor %}
 
 {% endblock %}
+
+
 
