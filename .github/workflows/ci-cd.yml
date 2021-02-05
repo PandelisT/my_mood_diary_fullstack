@@ -1,0 +1,39 @@
+  
+name: CI/CD
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+  test_suite: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Run tests
+        env:
+          FLASK_ENV: workflow
+          AWS_ACCESS_KEY_ID: 1
+          AWS_SECRET_ACCESS_KEY: 1
+          AWS_S3_BUCKET: 1
+        run: |
+          cd src && python -m unittest discover tests/
+    - name: Publish Docker Image
+      uses: elgohr/Publish-Docker-Github-Action@2.14
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      with:
+        name: ${{ env.DOCKER_IMAGE }}
+        username: ${{ steps.gcloud.outputs.username }}
+        password: ${{ steps.gcloud.outputs.password }}
+        registry: ${{ env.DOCKER_REGISTRY }}
+        tag_names: true
+        buildargs: SSH_PRIVATE_KEY

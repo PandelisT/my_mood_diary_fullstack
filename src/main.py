@@ -1,29 +1,35 @@
 # init.py
+
 from dotenv import load_dotenv
 load_dotenv()
 
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager 
 from flask_wtf import CsrfProtect
-from flask_migrate import Migrate
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
 
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 csrf = CsrfProtect()
 migrate = Migrate()
+login_manager = LoginManager()
+MIGRATION_DIR = os.path.join('src', 'migrations')
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("default_settings.app_config")
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
     db.init_app(app)
     csrf.init_app(app)
-    migrate.init_app(app, db)
+    migrate.init_app(app, db, directory=MIGRATION_DIR)
+    manager = Manager(app)
+    manager.add_command('db', MigrateCommand)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
