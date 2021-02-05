@@ -26,6 +26,9 @@ jobs:
           AWS_S3_BUCKET: 1
         run: |
           cd src && python -m unittest discover tests/
+  push_to_registry:
+    name: Build and push Docker image to Docker Hub
+    runs-on: ubuntu-latest
     - name: Publish Docker Image
       uses: elgohr/Publish-Docker-Github-Action@2.14
       env:
