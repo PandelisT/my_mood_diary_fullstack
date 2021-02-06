@@ -26,17 +26,3 @@ jobs:
           AWS_S3_BUCKET: 1
         run: |
           cd src && python -m unittest discover tests/
-  push_to_registry:
-    name: Build and push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    - name: Publish Docker Image
-      uses: elgohr/Publish-Docker-Github-Action@2.14
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      with:
-        name: ${{ env.DOCKER_IMAGE }}
-        username: ${{ steps.gcloud.outputs.username }}
-        password: ${{ steps.gcloud.outputs.password }}
-        registry: ${{ env.DOCKER_REGISTRY }}
-        tag_names: true
-        buildargs: SSH_PRIVATE_KEY
