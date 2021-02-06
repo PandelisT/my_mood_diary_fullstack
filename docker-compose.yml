@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   database:
-    container_name: flask_postgres_mood_app
+    container_name: flask_postgres
     image: postgres:latest
     env_file: .env
     volumes:
@@ -11,9 +11,9 @@ services:
     networks:
       - flask_app_network_mood
   flask:
-    container_name: flask_mood_app
+    container_name: mood_app_container
     build: .
-    image: test_mood_image_3
+    image: mood_app_main
     env_file: .env
     ports:
       - "5000:5000"
@@ -29,7 +29,7 @@ services:
       - migration
   migration:
     build: .
-    image: test_mood_image_3
+    image: mood_app_main
     env_file: .env
     networks:
       - flask_app_network_mood
