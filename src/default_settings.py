@@ -3,6 +3,13 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = "duck"
     MAX_CONTENT_LENGTH = 1 * 1024 * 1024
+    SECRET_KEY = '9OLWxND4o83j4K4iuopO'
+    MAIL_SERVER='smtp.gmail.com'
+    MAIL_PORT = 465
+    MAIL_USERNAME = 'yourId@gmail.com'
+    MAIL_PASSWORD = '*****'
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
 
     @property
     def AWS_ACCESS_KEY_ID(self):

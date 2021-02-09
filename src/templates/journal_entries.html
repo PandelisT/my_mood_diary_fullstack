@@ -19,7 +19,7 @@
 
 {% for journal_entry in journal_entries %}
 <div class="box">
-<div class="columns">
+<div class="columns has-text-left">
     <div class="column has-text-link">
         <a href="{{  url_for('journal.get_journal_entry', journal_id=journal_entry.id) }}">
             {{ journal_entry.journal_entry }}
@@ -29,15 +29,13 @@
              Date of entry:
              {{ journal_entry.journal_date.strftime('%d-%m-%Y') }}
         </div>
-    <div class="column">
-        <form action="{{ url_for('journal.update_journal_entry', journal_id=journal_entry.id) }}" method="POST">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input class="input" type="text" name="journal_entry" value="{{ journal_entry.journal_entry }}">
-                    <button class="button is-block is-info is-medium">Edit entry</button>
-        </form>
-    </div>
+        <div class="column">
+            Time of entry:
+            {{ journal_entry.journal_date.strftime('%H:%m  %p') }}
+       </div>
     <div class="column">
         <form action="{{ url_for('journal.delete_journal_entry', journal_id=journal_entry.id) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
         </form>
     </div>
@@ -47,6 +45,5 @@
   {% endfor %}
 
 {% endblock %}
-
 
 
