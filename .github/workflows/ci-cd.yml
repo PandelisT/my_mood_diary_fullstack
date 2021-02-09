@@ -84,7 +84,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: flask-mood-app
+        ECR_REPOSITORY: flask-mood-app-new
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
