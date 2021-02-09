@@ -13,7 +13,7 @@ services:
   flask:
     container_name: mood_app_container
     build: .
-    image: mood_app_main
+    image: flask-mood-app
     env_file: .env
     ports:
       - "5000:5000"
@@ -29,7 +29,7 @@ services:
       - migration
   migration:
     build: .
-    image: mood_app_main
+    image: flask-mood-app
     env_file: .env
     networks:
       - flask_app_network_mood
