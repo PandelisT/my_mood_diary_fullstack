@@ -9,15 +9,20 @@
         "entryPoint": null,
         "portMappings": [
           {
-            "hostPort": 0,
+            "hostPort": 8000,
             "protocol": "tcp",
-            "containerPort": 5000
+            "containerPort": 8000
           }
         ],
         "command": null,
         "linuxParameters": null,
         "cpu": 0,
-        "environment": [],
+        "environment": [
+          {
+            "name": "FLASK_APP",
+            "value": "main.py"
+          }
+        ],
         "resourceRequirements": null,
         "ulimits": null,
         "dnsServers": null,
@@ -26,7 +31,7 @@
         "secrets": null,
         "dockerSecurityOptions": null,
         "memory": null,
-        "memoryReservation": 500,
+        "memoryReservation": 512,
         "volumesFrom": [],
         "stopTimeout": null,
         "image": "415358402816.dkr.ecr.ap-southeast-2.amazonaws.com/flask-mood-app",
@@ -46,7 +51,7 @@
         "dockerLabels": null,
         "systemControls": null,
         "privileged": null,
-        "name": "flask-mood-app"
+        "name": "mood_app_main"
       }
     ],
     "placementConstraints": [],
@@ -55,8 +60,8 @@
     "compatibilities": [
       "EC2"
     ],
-    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:415358402816:task-definition/Flask-Web-Server-Mood-App:1",
-    "family": "Flask-Web-Server-Mood-App",
+    "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:415358402816:task-definition/Flask-Web-Server:2",
+    "family": "Flask-Web-Server",
     "requiresAttributes": [
       {
         "targetId": null,
@@ -69,15 +74,27 @@
         "targetType": null,
         "value": null,
         "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.task-eni"
       }
     ],
     "pidMode": null,
     "requiresCompatibilities": [
       "EC2"
     ],
-    "networkMode": null,
+    "networkMode": "awsvpc",
     "cpu": null,
-    "revision": 1,
+    "revision": 2,
     "status": "ACTIVE",
     "inferenceAccelerators": null,
     "proxyConfiguration": null,
