@@ -1,36 +1,21 @@
-<!-- templates/journal_entries.html -->
+<!-- templates/journal_entry.html -->
 
 {% extends "base.html" %}
 
 {% block content %}
 
-<form method="POST" action="/journal/new_entry">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <div class="field">
-        <div class="control">
-            <textarea class="textarea" name="journal_entry" placeholder="Add journal entry"></textarea>
-        </div>
-    </div>
-    <button class="button is-block is-info is-large">Add entry</button>
-</form>
 
-<h1  class="title is-2 is-spaced"> List of all {{ name }}'s journal entries</h1>
-
-
-{% for journal_entry in journal_entries %}
 <div class="box">
 <div class="columns">
-    <div class="column has-text-link">
-        <a href="{{  url_for('journal.get_journal_entry', journal_id=journal_entry.id) }}">
-            {{ journal_entry.journal_entry }}
-        </a>
+    <div class="column" action="{{ url_for('journal.get_journal_entry', journal_id=journal_entry.id) }}" method="GET">
+        {{ journal_entry.journal_entry }}
     </div>
     <div class="column">
              Date of entry:
              {{ journal_entry.journal_date.strftime('%d-%m-%Y') }}
         </div>
     <div class="column">
-        <form action="{{ url_for('journal.update_journal_entry', journal_id=journal_entry.id) }}" method="POST">
+        <form action="{{ url_for('journal.update_single_journal_entry', journal_id=journal_entry.id) }}" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <input class="input" type="text" name="journal_entry" value="{{ journal_entry.journal_entry }}">
                     <button class="button is-block is-info is-medium">Edit entry</button>
@@ -38,13 +23,13 @@
     </div>
     <div class="column">
         <form action="{{ url_for('journal.delete_journal_entry', journal_id=journal_entry.id) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
         </form>
     </div>
   </div>
 </div>
 
-  {% endfor %}
 
 {% endblock %}
 
