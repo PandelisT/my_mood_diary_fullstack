@@ -1,0 +1,49 @@
+<!-- templates/skill_entries.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST" action="/skill/new_entry">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="field">
+        <div class="control">
+            <textarea class="textarea" name="skill_entry" placeholder="Add skill entry"></textarea>
+        </div>
+    </div>
+    <button class="button is-block is-info is-large">Add entry</button>
+</form>
+
+<h1  class="title is-2 is-spaced"> List of all {{ name }}'s skill entries</h1>
+
+
+{% for skill_entry in skill_entries %}
+<div class="box">
+<div class="columns has-text-left">
+    <div class="column has-text-link">
+        <a href="{{  url_for('skill.get_skill_entry', skill_id=skill_entry.id) }}">
+            {{ skill_entry.skill_entry }}
+        </a>
+    </div>
+    <div class="column">
+             Date of entry:
+             {{ skill_entry.skill_date.strftime('%d-%m-%Y') }}
+        </div>
+        <div class="column">
+            Time of entry:
+            {{ skill_entry.skill_date.strftime('%H:%m  %p') }}
+       </div>
+    <div class="column">
+        <form action="{{ url_for('skill.delete_skill_entry', skill_id=skill_entry.id) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
+        </form>
+    </div>
+  </div>
+</div>
+
+  {% endfor %}
+
+{% endblock %}
+
+

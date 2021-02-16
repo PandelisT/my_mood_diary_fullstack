@@ -1,0 +1,37 @@
+<!-- templates/skill_entry.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="box">
+<div class="columns">
+    <div class="column" action="{{ url_for('skill.get_skill_entry',_skill_id_skill_entry.id) }}" method="GET">
+        {{_skill_entry_skill_entry }}
+    </div>
+    <div class="column">
+             Date of entry:
+             {{_skill_entry_skill_date.strftime('%d-%m-%Y') }}
+        </div>
+    <div class="column">
+        <form action="{{ url_for(_skill.update_single_skill_entry',_skill_id_skill_entry.id) }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input class="input" type="text" name=_skill_entry" value="{{_skill_entry_skill_entry }}">
+                    <button class="button is-block is-info is-medium">Edit entry</button>
+        </form>
+    </div>
+    <div class="column">
+        <form action="{{ url_for(_skill.delete_skill_entry',_skill_id_skill_entry.id) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+

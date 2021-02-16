@@ -21,4 +21,10 @@ class AddPsychologistDetails(FlaskForm):
     name = StringField('Name', [Length(min=4, max=25)])
     email = StringField('Email Address', [Length(min=6, max=35)])
 
+class AddSkillEntryForm(FlaskForm):
+    skill_entry = TextAreaField([Length(min=1)])
+    submit = SubmitField('Submit')
 
+class AddProblemAreaEntryForm(FlaskForm):
+    problem_area_entry = TextAreaField([Length(min=1)])
+    submit = SubmitField('Submit')

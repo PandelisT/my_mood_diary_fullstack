@@ -34,12 +34,15 @@
                     <a class="navbar-item" href="{{ url_for('main.profile') }}">
                         Profile
                     </a>
-                    <a href="{{ url_for('journal.journal_entry_create') }}" class="navbar-item">
-                        Add Journal Entry
-                    </a>
                     <a href="{{ url_for('journal.get_journal_entries') }}" class="navbar-item">
                         My Journal
                     </a>
+                    <a href="{{ url_for('skill.get_skill_entries') }}" class="navbar-item">
+                      My Skills
+                  </a>
+                  <a href="{{ url_for('problem_area.get_problem_area_entries') }}" class="navbar-item">
+                    My Problem Areas
+                </a>
                     {% endif %}
                     </div>
                   </div>

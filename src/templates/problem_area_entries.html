@@ -1,0 +1,49 @@
+<!-- templates/problem_area_entries.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST" action="/problem_area/new_entry">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="field">
+        <div class="control">
+            <textarea class="textarea" name="problem_area_entry" placeholder="Add Problem Area"></textarea>
+        </div>
+    </div>
+    <button class="button is-block is-info is-large">Add entry</button>
+</form>
+
+<h1  class="title is-2 is-spaced"> List of all {{ name }}'s Problem Areas</h1>
+
+
+{% for journal_entry in journal_entries %}
+<div class="box">
+<div class="columns has-text-left">
+    <div class="column has-text-link">
+        <a href="{{  url_for('problem_area.get_problem_area_entry', problem_area_id=problem_area_entry.id) }}">
+            {{ problem_area_entry.problem_area_entry }}
+        </a>
+    </div>
+    <div class="column">
+             Date of entry:
+             {{ problem_area_entry.problem_area_date.strftime('%d-%m-%Y') }}
+        </div>
+        <div class="column">
+            Time of entry:
+            {{ problem_area_entry.problem_area_date.strftime('%H:%m  %p') }}
+       </div>
+    <div class="column">
+        <form action="{{ url_for('problem_area.delete_problem_area_entry', problem_area_id=problem_area_entry.id) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
+        </form>
+    </div>
+  </div>
+</div>
+
+  {% endfor %}
+
+{% endblock %}
+
+
