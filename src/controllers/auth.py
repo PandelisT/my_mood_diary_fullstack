@@ -66,7 +66,7 @@ def signup_post():
         db.session.add(new_user)
         db.session.commit()
         flash('Thanks for registering')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('main.profile'))
     return render_template('signup.html', form=form, error=form.errors)
 
 @auth.route('/logout')

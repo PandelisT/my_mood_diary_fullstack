@@ -7,22 +7,22 @@
 
 <div class="box">
 <div class="columns">
-    <div class="column" action="{{ url_for('skill.get_skill_entry',_skill_id_skill_entry.id) }}" method="GET">
-        {{_skill_entry_skill_entry }}
+    <div class="column" action="{{ url_for('skill.get_skill_entry',skill_id=skill_entry.id) }}" method="GET">
+        {{skill_entry.skill_entry }}
     </div>
     <div class="column">
              Date of entry:
-             {{_skill_entry_skill_date.strftime('%d-%m-%Y') }}
+             {{skill_entry.skill_date.strftime('%d-%m-%Y') }}
         </div>
     <div class="column">
-        <form action="{{ url_for(_skill.update_single_skill_entry',_skill_id_skill_entry.id) }}" method="POST">
+        <form action="{{ url_for('skill.update_single_skill_entry', skill_id=skill_entry.id) }}" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input class="input" type="text" name=_skill_entry" value="{{_skill_entry_skill_entry }}">
+                    <input class="input" type="text" name="skill_entry" value="{{skill_entry_skill_entry }}">
                     <button class="button is-block is-info is-medium">Edit entry</button>
         </form>
     </div>
     <div class="column">
-        <form action="{{ url_for(_skill.delete_skill_entry',_skill_id_skill_entry.id) }}" method="POST">
+        <form action="{{ url_for('skill.delete_skill_entry',skill_id=skill_entry.id) }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
         </form>

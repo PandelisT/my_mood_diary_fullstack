@@ -22,15 +22,15 @@ def post_psychologist_details():
         db.session.add(psychologist)
         db.session.commit()
 
-    return render_template('profile.html', name=current_user.name)
+    return redirect(url_for('main.profile'))
 
-# @journal.route("/journal_entry/<int:journal_id>", methods=["GET"])
-# @login_required
-# def get_journal_entry(journal_id):
-#     user_id = current_user._get_current_object()
-#     user = user_id.id
-#     journal_entry = Journal.query.filter_by(user_id_fk=user, id=journal_id).first()
-#     return render_template('journal_entry.html', journal_entry=journal_entry)
+@psychologist.route("/<int:psychologist_id>", methods=["GET"])
+@login_required
+def get_psychologist(psychologist_id):
+    user_id = current_user._get_current_object()
+    user = user_id.id
+    psychologist = Psychologist.query.filter_by(user_id_fk=user, id=psychologist_id).first()
+    return redirect(url_for('main.profile', psychologist=psychologist)) 
 
 # @journal.route("/journal_entries/<int:journal_id>", methods=["POST"])
 # @login_required

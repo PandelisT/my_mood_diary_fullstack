@@ -12,7 +12,7 @@
     </div>
     <div class="column">
              Date of entry:
-             {{ problem_area_entry.journal_date.strftime('%d-%m-%Y') }}
+             {{ problem_area_entry.problem_area_date.strftime('%d-%m-%Y') }}
         </div>
     <div class="column">
         <form action="{{ url_for('problem_area.update_single_problem_area_entry', problem_area_id=problem_area_entry.id) }}" method="POST">
