@@ -1,5 +1,3 @@
-# init.py
-
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -12,14 +10,12 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_mail import Mail
 
-
-# init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 csrf = CsrfProtect()
 migrate = Migrate()
 login_manager = LoginManager()
 mail = Mail()
-MIGRATION_DIR = os.path.join('.', 'migrations')
+MIGRATION_DIR = os.path.join('src', 'migrations')
 
 
 def create_app():

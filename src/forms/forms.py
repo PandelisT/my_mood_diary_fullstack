@@ -17,3 +17,8 @@ class RegistrationForm(FlaskForm):
         DataRequired(), Length(min=6)
     ])
 
+class AddPsychologistDetails(FlaskForm):
+    name = StringField('Name', [Length(min=4, max=25)])
+    email = StringField('Email Address', [Length(min=6, max=35)])
+
+
