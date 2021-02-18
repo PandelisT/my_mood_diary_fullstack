@@ -3,7 +3,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<h1  class="title is-2 is-spaced"> Journal entries</h1>
+<div class="has-text-justified">
+    <p>
+    Thoughts, emotions and behaviours are all intertwined whereby negative thoughts can trigger negative behaviours. A more holistic approach is usually implemented by tracking these three areas i.e. negative thoughts, general mood ratings and problem behaviours.
+    </p>
+    <br>
+    <p>
+    Tracking mood, thoughts and behaviours has been shown to increase insight, motivation and willingness to change. Skills are designed at the individual level to replace the negative moods, thoughts and behaviours. 
+    </p>
+    <br>
+    </div>
 <form method="POST" action="/journal/new_entry">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="field">
@@ -14,7 +24,7 @@
     <button class="button is-block is-info is-large">Add entry</button>
 </form>
 
-<h1  class="title is-2 is-spaced"> List of all {{ name }}'s journal entries</h1>
+
 
 
 {% for journal_entry in journal_entries %}
@@ -41,8 +51,14 @@
     </div>
   </div>
 </div>
-
+{% else %}
+<div class="mgt-medium">
+<div class="notification is-danger">
+    <p>No problem areas recorded</p>
+</div>
+</div>
   {% endfor %}
+
 
 {% endblock %}
 

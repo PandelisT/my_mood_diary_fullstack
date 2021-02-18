@@ -4,6 +4,26 @@
 
 {% block content %}
 
+
+  <section class="hero is-large has-text-centered is-justify-content-center" style="background-image: url(/static/images/psych-1.jpg); width:100%; height:100%; text-align:center; margin:auto; padding:0; background-size: cover; opacity: 0.6; background-position: center center; background-repeat: no-repeat;" >
+    <div class="hero-body has-text-centered is-align-items-center" >
+  
+      <p class="title is-size-1 has-text-centered has-text-weight-bold is-justify-content-center">
+        Skills
+      </p>
+    </div>
+  </section>
+  <!-- <img src="{{ url_for('static', filename = 'images/psych-1.jpg') }}" alt=""> -->
+<div class="has-text-justified">
+<p>
+Thoughts, emotions and behaviours are all intertwined whereby negative thoughts can trigger negative behaviours. A more holistic approach is usually implemented by tracking these three areas i.e. negative thoughts, general mood ratings and problem behaviours.
+</p>
+<br>
+<p>
+Tracking mood, thoughts and behaviours has been shown to increase insight, motivation and willingness to change. Skills are designed at the individual level to replace the negative moods, thoughts and behaviours. 
+</p>
+<br>
+</div>
 <form method="POST" action="/skill/new_entry">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <div class="field">
@@ -13,8 +33,6 @@
     </div>
     <button class="button is-block is-info is-large">Add entry</button>
 </form>
-
-<h1  class="title is-2 is-spaced"> List of all {{ name }}'s skill entries</h1>
 
 
 {% for skill_entry in skill_entries %}
@@ -41,8 +59,15 @@
     </div>
   </div>
 </div>
-
+{% else %}
+<br>
+<div class="mgt-medium">
+<div class="notification is-danger">
+    <p>No problem areas recorded</p>
+</div>
+</div>
   {% endfor %}
+
 
 {% endblock %}
 
