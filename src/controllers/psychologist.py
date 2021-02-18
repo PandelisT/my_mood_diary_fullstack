@@ -22,15 +22,25 @@ def post_psychologist_details():
         db.session.add(psychologist)
         db.session.commit()
 
-    return redirect(url_for('main.profile'))
+    return redirect(url_for('psychologist.get_all_psychologists'))
 
-@psychologist.route("/<int:psychologist_id>", methods=["GET"])
+@psychologist.route("/psychologist", methods=["GET"])
 @login_required
-def get_psychologist(psychologist_id):
+def get_all_psychologists():
     user_id = current_user._get_current_object()
     user = user_id.id
-    psychologist = Psychologist.query.filter_by(user_id_fk=user, id=psychologist_id).first()
-    return redirect(url_for('main.profile', psychologist=psychologist)) 
+    psychologists = Psychologist.query.filter_by(user_id=user).all()
+    print(psychologists)
+    return render_template('profile.html', psychologists=psychologists, name=current_user.name)
+
+
+# @psychologist.route("/<int:psychologist_id>", methods=["GET"])
+# @login_required
+# def get_psychologist(psychologist_id):
+#     user_id = current_user._get_current_object()
+#     user = user_id.id
+#     psychologist = Psychologist.query.filter_by(user_id_fk=user, id=psychologist_id).first()
+#     return render_template('profile', psychologist=psychologists)
 
 # @journal.route("/journal_entries/<int:journal_id>", methods=["POST"])
 # @login_required

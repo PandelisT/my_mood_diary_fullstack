@@ -1,7 +1,10 @@
 # main.py
-
-from flask import Blueprint, render_template
+from main import db
+from flask import  Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from models.User import User
+from forms.forms import RegistrationForm
 
 main = Blueprint('main', __name__)
 
@@ -14,25 +17,17 @@ def index():
 def profile():
     return render_template('profile.html', name=current_user.name)
 
-# @psychologist.route('psychologist/new_details', methods= ["POST"])
-# @login_required
-# def post_psychologist_details():
-#     form = AddPsychologistDetails()
-#     if form.validate_on_submit():
-#         psychologist = Psychologist()
-#         psychologist.name = form.name.data
-#         psychologist.email = form.email.data
-#         user_id = current_user._get_current_object()
-#         psychologist.user_id = user_id.id
-#         db.session.add(psychologist)
-#         db.session.commit()
 
-#     return redirect(url_for('main.profile'))
+@main.route('/profile', methods=["POST"])
+@login_required
+def user_password_change():
+    form = RegistrationForm()
+    user_id = current_user._get_current_object()
+    email = user_id.email
+    name = user_id.name
+    password = request.form.get('password')
+    user_id.password = generate_password_hash(password, method='sha256')
+    db.session.commit()
+    flash('Password changed')
 
-# @psychologist.route("psychologist//<int:psychologist_id>", methods=["GET"])
-# @login_required
-# def get_psychologist(psychologist_id):
-#     user_id = current_user._get_current_object()
-#     user = user_id.id
-#     psychologist = Psychologist.query.filter_by(user_id_fk=user, id=psychologist_id).first()
-#     return redirect(url_for('main.profile', psychologist=psychologist)) 
+    return redirect(url_for('main.profile'))

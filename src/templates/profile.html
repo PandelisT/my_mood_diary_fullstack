@@ -6,4 +6,64 @@
 <h1 class="title">
   Welcome, {{ name }}!
 </h1>
+
+<div class="column is-4 is-offset-4">
+  <h4 class="title">Add psychologist details</h4>
+  <div class="box">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          <div class="notification is-danger">
+              {{ messages[0] }}
+          </div>
+      {% endif %}
+      {% endwith %}
+      <form method="POST" action="{{ url_for('psychologist.post_psychologist_details') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <div class="field">
+              <div class="control">
+                  <input class="input is-large" name="name" placeholder="Add Psychologist Name">
+              </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <input class="input is-large" name="email" placeholder="Add Psychologist email">
+            </div>
+        </div>
+          <button class="button is-block is-info is-large is-fullwidth">Add Psychologist</button>
+      </form>
+  </div>
+</div>
+
+{% for psychologists in psychologists %}
+<div class="box">
+<div class="columns has-text-left">
+    <div class="column has-text-link">
+        <a href="{{  url_for('psychologist.get_all_psychologists', psychologists=psychologists.id) }}">
+            {{ psychologists.name }}
+        </a>
+    </div>
+    <div class="column">
+             {{ psychologists.email }}
+        </div>
+  </div>
+</div>
+
+  {% endfor %}
+
+  <div class="column is-4 is-offset-4">
+    <h3 class="title">Change Password</h3>
+    <div class="box">
+        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+        <form action="{{ url_for('main.user_password_change') }}"  method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth">Change</button>
+        </form>
+    </div>
+</div>
 {% endblock %} 

@@ -5,7 +5,9 @@ from flask_login import login_user, logout_user, login_required
 from models.User import User
 from forms.forms import RegistrationForm
 
+
 auth = Blueprint('auth', __name__)
+
 
 @auth.route('/login')
 def login():
@@ -30,39 +32,15 @@ def login_post():
 def signup():
     return render_template('signup.html')
 
-# @auth.route('/signup', methods=['POST'])
-# def signup_post():
-
-#     email = request.form.get('email')
-#     name = request.form.get('name')
-#     password = request.form.get('password')
-
-#     user = User.query.filter_by(email=email).first()
-
-#     if user: 
-#         flash('Email address already exists')
-#         return redirect(url_for('auth.signup'))
-
-#     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
-
-#     db.session.add(new_user)
-#     db.session.commit()
-
-#     return redirect(url_for('auth.login'))
-
 @auth.route('/signup', methods=['POST'])
 def signup_post():
     form = RegistrationForm()
     if form.validate():
         email = request.form.get('email')
         name = request.form.get('name')
-        password = request.form.get('password')
-        print(email)
-        print(name)
-        print(password)
-
+        password = request.form.get('password')    
         new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
-        print(new_user)
+
         db.session.add(new_user)
         db.session.commit()
         flash('Thanks for registering')
@@ -74,3 +52,5 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+
