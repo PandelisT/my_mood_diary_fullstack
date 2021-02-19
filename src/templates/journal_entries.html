@@ -46,7 +46,7 @@
     <div class="column">
         <form action="{{ url_for('journal.delete_journal_entry', journal_id=journal_entry.id) }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <input class="button is-block is-info is-medium box has-text-centered" type=submit value=Delete>
+            <input class="button is-block is-info is-small box has-text-centered" type=submit value=Delete>
         </form>
     </div>
   </div>
@@ -54,7 +54,7 @@
 {% else %}
 <div class="mgt-medium">
 <div class="notification is-danger">
-    <p>No problem areas recorded</p>
+    <p>No entries recorded</p>
 </div>
 </div>
   {% endfor %}

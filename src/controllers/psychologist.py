@@ -22,7 +22,7 @@ def post_psychologist_details():
         db.session.add(psychologist)
         db.session.commit()
 
-    return redirect(url_for('psychologist.get_all_psychologists'))
+    return render_template('profile.html', psychologist=psychologist, name=current_user.name) # redirect(url_for('psychologist.get_all_psychologists'))
 
 @psychologist.route("/psychologist", methods=["GET"])
 @login_required

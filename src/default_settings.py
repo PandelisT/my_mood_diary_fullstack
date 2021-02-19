@@ -35,6 +35,9 @@ class Config(object):
 
         return value
 
+
+class DevelopmentConfig(Config):
+    DEBUG = True
     @property
     def SQLALCHEMY_DATABASE_URI(self):
         # DB_URI for local development
@@ -47,8 +50,7 @@ class Config(object):
             raise ValueError("DB_URI is not set")
 
         return value
-class DevelopmentConfig(Config):
-    DEBUG = True
+
 class ProductionConfig(Config):
     @property
     def JWT_SECRET_KEY(self):
@@ -58,8 +60,12 @@ class ProductionConfig(Config):
             raise ValueError("JWT Secret Key is not set")
         
         return value
+
 class TestingConfig(Config):
     TESTING = True
+    WTF_CSRF_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME_TEST')}"
+
 
 class WorkflowConfig(Config):
     TESTING = True

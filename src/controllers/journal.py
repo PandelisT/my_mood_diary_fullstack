@@ -23,7 +23,7 @@ def journal_entry_create():
 
     return redirect(url_for('journal.get_journal_entries'))
 
-@journal.route("/journal_entries", methods=["GET"])
+@journal.route("/journal-entries", methods=["GET"])
 @login_required
 def get_journal_entries():
     user_id = current_user._get_current_object()
@@ -32,7 +32,7 @@ def get_journal_entries():
     return render_template('journal_entries.html', journal_entries=journal_entries, name=current_user.name)
 
 
-@journal.route("/journal_entry/<int:journal_id>", methods=["GET"])
+@journal.route("/journal-entry/<int:journal_id>", methods=["GET"])
 @login_required
 def get_journal_entry(journal_id):
     user_id = current_user._get_current_object()
@@ -40,7 +40,7 @@ def get_journal_entry(journal_id):
     journal_entry = Journal.query.filter_by(user_id_fk=user, id=journal_id).first()
     return render_template('journal_entry.html', journal_entry=journal_entry)
 
-@journal.route("/journal_entries/<int:journal_id>", methods=["POST"])
+@journal.route("/journal-entries/<int:journal_id>", methods=["POST"])
 @login_required
 def delete_journal_entry(journal_id):
     user_id = current_user._get_current_object()
@@ -51,7 +51,7 @@ def delete_journal_entry(journal_id):
     return redirect(url_for('journal.get_journal_entries'))
 
 
-@journal.route("/journal_entries/update/<int:journal_id>", methods=["POST"])
+@journal.route("/journal-entries/update/<int:journal_id>", methods=["POST"])
 @login_required
 def update_journal_entry(journal_id):
     form = AddJournalEntryForm()
@@ -63,7 +63,7 @@ def update_journal_entry(journal_id):
     return redirect(url_for('journal.get_journal_entries'))
 
 
-@journal.route("/journal_entry/update/<int:journal_id>", methods=["POST"])
+@journal.route("/journal-entry/update/<int:journal_id>", methods=["POST"])
 @login_required
 def update_single_journal_entry(journal_id):
     form = AddJournalEntryForm()
@@ -73,5 +73,3 @@ def update_single_journal_entry(journal_id):
     update_journal_entry.journal_entry = form.journal_entry.data
     db.session.commit()
     return render_template('journal_entry.html', journal_entry=update_journal_entry)
-    
-

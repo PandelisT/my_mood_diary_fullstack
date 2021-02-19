@@ -40,7 +40,6 @@ def signup_post():
         name = request.form.get('name')
         password = request.form.get('password')    
         new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
-
         db.session.add(new_user)
         db.session.commit()
         flash('Thanks for registering')
