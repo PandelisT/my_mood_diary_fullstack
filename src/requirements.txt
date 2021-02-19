@@ -58,7 +58,6 @@ pyrsistent==0.15.5
 pyserial==3.4
 python-dateutil==2.8.1
 python-dotenv==0.15.0
-python3-dotenv
 python-editor==1.0.4
 requests==2.22.0
 service-identity==18.1.0
