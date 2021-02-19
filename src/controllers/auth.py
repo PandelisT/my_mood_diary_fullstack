@@ -34,16 +34,21 @@ def signup():
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():
-    form = RegistrationForm()
-    if form.validate():
-        email = request.form.get('email')
-        name = request.form.get('name')
-        password = request.form.get('password')    
-        new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
-        db.session.add(new_user)
-        db.session.commit()
-        flash('Thanks for registering')
-        return redirect(url_for('main.profile'))
+    try:
+        form = RegistrationForm()
+        if form.validate():
+            email = request.form.get('email')
+            name = request.form.get('name')
+            password = request.form.get('password')    
+            new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Thanks for registering. Please Log in below.')
+            return redirect(url_for('main.profile'))
+    except:
+        flash('Email already registered')
+        render_template('signup.html', form=form, error=form.errors)
+
     return render_template('signup.html', form=form, error=form.errors)
 
 @auth.route('/logout')
