@@ -23,21 +23,8 @@ class TestAuthMoodApp(unittest.TestCase):
         db.session.remove()
         db.drop_all()
         cls.app_context.pop()
-
-    def test_home(self):
-        response  = self.client.get("/")
-        self.assertIn("My Mood Diary", str(response.data))
-        self.assertEqual(response.status_code, 200)
-
-    def test_sign_up(self):
-        response = self.client.post('/signup', data={
-            'email': 'pandeli@test.com',
-            'name': 'Pandelis',
-            'password': 'testing'
-        })
-        self.assertEqual(response.status_code, 302)
-
-    def test_log_in(self):
+    
+    def test_profile(self):
         response = self.client.post('/signup', data={
             'email': 'pandeli@test.com',
             'name': 'Pandelis',
@@ -51,4 +38,7 @@ class TestAuthMoodApp(unittest.TestCase):
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
+        response  = self.client.get("/profile")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Welcome", str(response.data))
 
