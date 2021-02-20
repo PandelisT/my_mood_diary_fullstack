@@ -27,10 +27,13 @@ The target audience is clients who see a psychologist for any issue from addicti
 My tech stack includes:
 
 PostgreSQL database in AWS RDS
-Python Flask with Jinja2 templates
-HTML/CSS in Jinja2 templates
+Python Flask with Jinja2 templates to render CSS/HTML with Bulma as the CSS library
 AWS ECS and ECR for deployment
 Docker to create images of Flask App
+
+**Deployed Application**
+
+The deployed application can be found at this URL: https://mymooddiary.ml. The application was deployed using AWS ECS and PostgreSQL in RDS. 
 
 **Run the app locally**
 
@@ -104,12 +107,9 @@ To run this app on Ubuntu 20.04 LTS:
     
             return value
     ```
-
     
 
 **Create and Run Docker Containers locally**
-
-In main.py, MIGRATION_DIR = os.path.join('.', 'migrations'). Running purely locally with `flask run` needs to be set to
 
 1. In the .env file, update these environment variables for e.g.:
 
