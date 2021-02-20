@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 
+RUN apt-get clean 
+
 RUN apt-get update --fix-missing
 
 RUN apt-get install python3.8 libpq-dev wait-for-it -y

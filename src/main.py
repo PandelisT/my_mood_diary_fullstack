@@ -8,16 +8,12 @@ from flask_login import LoginManager
 from flask_wtf import CsrfProtect
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
-from flask_mail import Mail
-from flask_seeder import FlaskSeeder
 
 db = SQLAlchemy()
 csrf = CsrfProtect()
 migrate = Migrate()
 login_manager = LoginManager()
-mail = Mail()
-MIGRATION_DIR = os.path.join('src', 'migrations')
-seeder = FlaskSeeder()
+MIGRATION_DIR = os.path.join('.', 'migrations')
 
 
 def create_app():
@@ -26,9 +22,7 @@ def create_app():
 
     db.init_app(app)
     csrf.init_app(app)
-    mail.init_app(app)
     migrate.init_app(app, db, directory=MIGRATION_DIR)
-    seeder.init_app(app, db)
     manager = Manager(app)
     manager.add_command('db', MigrateCommand)
 

@@ -26,8 +26,12 @@ def user_password_change():
     email = user_id.email
     name = user_id.name
     password = request.form.get('password')
-    user_id.password = generate_password_hash(password, method='sha256')
-    db.session.commit()
-    flash('Password changed')
+    if len(password) < 6:
+        flash('Password not valid')
+        return redirect(url_for('main.profile'))
+    else:
+        user_id.password = generate_password_hash(password, method='sha256')
+        db.session.commit()
+        flash('Password changed')
 
     return redirect(url_for('main.profile'))

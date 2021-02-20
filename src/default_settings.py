@@ -4,12 +4,6 @@ class Config(object):
     JWT_SECRET_KEY = "duck"
     MAX_CONTENT_LENGTH = 1 * 1024 * 1024
     SECRET_KEY = '9OLWxND4o83j4K4iuopO'
-    MAIL_SERVER='smtp.gmail.com'
-    MAIL_PORT = 465
-    MAIL_USERNAME = 'yourId@gmail.com'
-    MAIL_PASSWORD = '*****'
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
 
     @property
     def AWS_ACCESS_KEY_ID(self):
@@ -41,10 +35,10 @@ class DevelopmentConfig(Config):
     @property
     def SQLALCHEMY_DATABASE_URI(self):
         # DB_URI for local development
-        value = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+        # value = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
         
         # DB_URI for Docker
-        # value =  f"{os.getenv('DB_URI')}"
+        value =  f"{os.getenv('DB_URI')}"
 
         if not value:
             raise ValueError("DB_URI is not set")
