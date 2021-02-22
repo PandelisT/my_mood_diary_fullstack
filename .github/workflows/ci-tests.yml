@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt install python3-pip
-          if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then pip3 install -r src/requirements.txt; fi
       - name: Run tests
         env:
           FLASK_ENV: workflow
