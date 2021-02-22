@@ -1,7 +1,7 @@
 import unittest
 import os
 from main import create_app, db
-from flask_login import current_user
+
 
 class TestAuthMoodApp(unittest.TestCase):
     @classmethod
@@ -25,7 +25,7 @@ class TestAuthMoodApp(unittest.TestCase):
         cls.app_context.pop()
 
     def test_home(self):
-        response  = self.client.get("/")
+        response = self.client.get("/")
         self.assertIn("My Mood Diary", str(response.data))
         self.assertEqual(response.status_code, 200)
 
@@ -50,5 +50,3 @@ class TestAuthMoodApp(unittest.TestCase):
             'password': 'testing'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-
-

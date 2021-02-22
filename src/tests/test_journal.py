@@ -1,7 +1,7 @@
 import unittest
 import os
 from main import create_app, db
-from flask_login import current_user
+
 
 class TestAuthMoodApp(unittest.TestCase):
     @classmethod
@@ -38,7 +38,7 @@ class TestAuthMoodApp(unittest.TestCase):
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
-        response  = self.client.get("/journal/journal-entries")
+        response = self.client.get("/journal/journal-entries")
         self.assertEqual(response.status_code, 200)
         self.assertIn("Journal entries", str(response.data))
 

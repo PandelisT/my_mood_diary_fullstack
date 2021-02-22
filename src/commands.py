@@ -1,14 +1,16 @@
 from main import db
 from flask import Blueprint
-import os
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
+
 
 db_commands = Blueprint("db-custom", __name__)
+
 
 @db_commands.cli.command("create")
 def create_db():
     db.create_all()
     print("Tables created")
+
 
 @db_commands.cli.command("drop")
 def drop_db():

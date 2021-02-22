@@ -1,4 +1,6 @@
 import os
+
+
 class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = "duck"
@@ -11,7 +13,7 @@ class Config(object):
         if not value:
             raise ValueError("AWS_ACCESS_KEY_ID is not set")
         return value
-    
+
     @property
     def AWS_SECRET_ACCESS_KEY(self):
         value = os.getenv('AWS_SECRET_ACCESS_KEY')
@@ -19,7 +21,7 @@ class Config(object):
         if not value:
             raise ValueError("AWS_SECRET_ACCESS_KEY is not set")
         return value
-    
+
     @property
     def AWS_S3_BUCKET(self):
         value = os.getenv('AWS_S3_BUCKET')
@@ -32,18 +34,24 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+
     @property
     def SQLALCHEMY_DATABASE_URI(self):
         # DB_URI for local development
-        # value = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
-        
+        # value = f'''postgresql+psycopg2://{os.getenv(
+        #    'DB_USER')}:{os.getenv(
+        #    'DB_PASSWORD')}@{os.getenv(
+        #    'DB_HOST')}/{os.getenv(
+        #    'DB_NAME')}'''
+
         # DB_URI for Docker
-        value =  f"{os.getenv('DB_URI')}"
+        value = f"{os.getenv('DB_URI')}"
 
         if not value:
             raise ValueError("DB_URI is not set")
 
         return value
+
 
 class ProductionConfig(Config):
     @property
@@ -52,18 +60,24 @@ class ProductionConfig(Config):
 
         if not value:
             raise ValueError("JWT Secret Key is not set")
-        
+
         return value
+
 
 class TestingConfig(Config):
     TESTING = True
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME_TEST')}"
+    SQLALCHEMY_DATABASE_URI = f'''postgresql+psycopg2://{os.getenv(
+        'DB_USER')}:{os.getenv(
+        'DB_PASSWORD')}@{os.getenv(
+        'DB_HOST')}/{os.getenv(
+        'DB_NAME_TEST')}'''
 
 
 class WorkflowConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+
 
 environment = os.getenv("FLASK_ENV")
 

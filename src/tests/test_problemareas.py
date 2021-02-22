@@ -1,7 +1,7 @@
 import unittest
 import os
 from main import create_app, db
-from flask_login import current_user
+
 
 class TestAuthMoodApp(unittest.TestCase):
     @classmethod
@@ -24,7 +24,6 @@ class TestAuthMoodApp(unittest.TestCase):
         db.drop_all()
         cls.app_context.pop()
 
-
     def test_problemareas(self):
         response = self.client.post('/signup', data={
             'email': 'pandeli@test.com',
@@ -39,10 +38,9 @@ class TestAuthMoodApp(unittest.TestCase):
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
-        response  = self.client.get("/problem_area/problem_area_entries")
+        response = self.client.get("/problem_area/problem_area_entries")
         self.assertEqual(response.status_code, 200)
         self.assertIn("Problem Areas", str(response.data))
-
 
     def test_post_problemareas(self):
         response = self.client.post('/signup', data={

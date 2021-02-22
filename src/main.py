@@ -1,13 +1,12 @@
-from dotenv import load_dotenv
-load_dotenv()
-
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager 
+from flask_login import LoginManager
 from flask_wtf import CsrfProtect
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from dotenv import load_dotenv
+load_dotenv()
 
 db = SQLAlchemy()
 csrf = CsrfProtect()
@@ -31,7 +30,7 @@ def create_app():
     login_manager.init_app(app)
 
     from models.User import User
-    
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))

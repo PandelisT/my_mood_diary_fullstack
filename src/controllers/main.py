@@ -1,16 +1,18 @@
-# main.py
 from main import db
-from flask import  Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect
+from flask import url_for, request, flash
 from flask_login import login_required, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from models.User import User
+from werkzeug.security import generate_password_hash
 from forms.forms import RegistrationForm
 
+
 main = Blueprint('main', __name__)
+
 
 @main.route('/')
 def index():
     return render_template('index.html')
+
 
 @main.route('/profile')
 @login_required
@@ -23,8 +25,6 @@ def profile():
 def user_password_change():
     form = RegistrationForm()
     user_id = current_user._get_current_object()
-    email = user_id.email
-    name = user_id.name
     password = request.form.get('password')
     if len(password) < 6:
         flash('Password not valid')

@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 from main import db
 
+
 class Psychologist(UserMixin, db.Model):
     __tablename__ = "psychologists"
 

@@ -1,7 +1,7 @@
 from main import db
-from datetime import datetime 
-from sqlalchemy import text
+from datetime import datetime
 from flask_login import UserMixin
+
 
 class Skill(UserMixin, db.Model):
     __tablename__ = "skills"

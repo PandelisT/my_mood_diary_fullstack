@@ -1,7 +1,7 @@
 import unittest
 import os
 from main import create_app, db
-from flask_login import current_user
+
 
 class TestAuthMoodApp(unittest.TestCase):
     @classmethod
@@ -12,9 +12,7 @@ class TestAuthMoodApp(unittest.TestCase):
         cls.app_context = cls.app.app_context()
         cls.app_context.push()
         cls.client = cls.app.test_client()
-
         db.create_all()
-
         runner = cls.app.test_cli_runner()
         runner.invoke(args=["db", "seed"])
 
@@ -23,7 +21,7 @@ class TestAuthMoodApp(unittest.TestCase):
         db.session.remove()
         db.drop_all()
         cls.app_context.pop()
-    
+
     def test_profile(self):
         response = self.client.post('/signup', data={
             'email': 'pandeli@test.com',
@@ -38,7 +36,6 @@ class TestAuthMoodApp(unittest.TestCase):
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
-        response  = self.client.get("/profile")
+        response = self.client.get("/profile")
         self.assertEqual(response.status_code, 200)
         self.assertIn("Welcome", str(response.data))
-
