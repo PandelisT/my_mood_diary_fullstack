@@ -6,7 +6,7 @@ from main import create_app, db
 class TestAuthMoodApp(unittest.TestCase):
     @classmethod
     def setUp(cls):
-        if os.environ.get("FLASK_ENV") != "testing":
+        if os.environ.get("FLASK_ENV") != ("testing" or "workflow"):
             raise EnvironmentError("FLASK_ENV is not testing")
         cls.app = create_app()
         cls.app_context = cls.app.app_context()
