@@ -55,7 +55,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: flask-mood-app
+        ECR_REPOSITORY: updated-flask-mood-app
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
@@ -79,6 +79,6 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: Mood-App
-        cluster: Flask-Mood-App
+        service: Flask-App
+        cluster: Flask-Mood-Cluster
         wait-for-service-stability: true

@@ -37,7 +37,7 @@
         },
         {
           "name": "DB_URI",
-          "value": "postgresql+psycopg2://postgres:postgres@mood-db-1.ci1gadfvhgrf.ap-southeast-2.rds.amazonaws.com/flask_app"
+          "value": "postgresql+psycopg2://postgres:postgres@mood-app.ci1gadfvhgrf.ap-southeast-2.rds.amazonaws.com/flask_app"
         },
         {
           "name": "FLASK_APP",
@@ -48,8 +48,12 @@
           "value": "development"
         },
         {
+          "name": "JWT_SECRET_KEY",
+          "value": "duck"
+        },
+        {
           "name": "POSTGRES_DB",
-          "value": "flask_app"
+          "value": "postgres"
         },
         {
           "name": "POSTGRES_PASSWORD",
@@ -67,7 +71,7 @@
       "memoryReservation": 512,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "415358402816.dkr.ecr.ap-southeast-2.amazonaws.com/flask-mood-app:1396e861a21edfcadace9a710af86ec235ab92fd",
+      "image": "415358402816.dkr.ecr.ap-southeast-2.amazonaws.com/updated-flask-mood-app",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -84,7 +88,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "Flask-App-Mood"
+      "name": "Flask-Mood-App"
     }
   ],
   "placementConstraints": [],
@@ -93,8 +97,8 @@
   "compatibilities": [
     "EC2"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:415358402816:task-definition/Flask-Mood-App:3",
-  "family": "Flask-Mood-App",
+  "taskDefinitionArn": "arn:aws:ecs:ap-southeast-2:415358402816:task-definition/Flask-Web-Server:9",
+  "family": "Flask-Web-Server",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -127,7 +131,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": null,
-  "revision": 3,
+  "revision": 9,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
