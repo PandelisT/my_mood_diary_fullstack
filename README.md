@@ -12,11 +12,11 @@ The journal entries are for clients to track mood, thoughts and behaviours. A ps
 
 **\- Functionality / features**
 
-User authentication
-Mood tracking through journal entries (CRUD resources for adding/updating/deleting/reading journal entries)
-Problem area tracking  (CRUD resources for adding/updating/deleting/reading problem areas)
-Skills tracking (CRUD resources for adding/updating/deleting/reading skills)
-Adding psychologist details
+1. User authentication
+2. Mood tracking through journal entries (CRUD resources for adding/updating/deleting/reading journal entries)
+3. Problem area tracking  (CRUD resources for adding/updating/deleting/reading problem areas)
+4. Skills tracking (CRUD resources for adding/updating/deleting/reading skills)
+5. Adding psychologist details
 
 **\- Target audience**
 
@@ -53,7 +53,7 @@ To run this app on Ubuntu 20.04 LTS:
 
 7. Install modules from src/requirements.txt: `pip install -r requirements.txt`
 
-8.  In default_settings.py file, set MIGRATION_DIR = os.path.join('src', 'migrations')
+8.  In main.py file, set MIGRATION_DIR = os.path.join('src', 'migrations')
 
 9. Create a .env file and insert variables in the file:
 
@@ -117,7 +117,7 @@ To run this app on Ubuntu 20.04 LTS:
    DB_URI=postgresql+psycopg2://postgres:banana@flask_postgres/flask_app
    where `postgres` is the user, `banana` is the password, `flask_postgres` is the container and `flask_app` is the database name
 
-2.  In default_settings.py file, set MIGRATION_DIR = os.path.join('.', 'migrations')
+2.  In main.py file, set MIGRATION_DIR = os.path.join('.', 'migrations')
 
 3. Build the Docker Image:
 
@@ -151,12 +151,16 @@ To remove all the containers and resources:
 
 **When running docker-compose.yml**
 
-To build using docker-compose, run:
-`docker-compose up`
+1. Build the Docker Image:
 
-To tear down, run:
-`docker-compose down -v `
-(-v removes the volumes as well)
+   `docker build --tag mood_app_main .`
+
+2. To run the app using docker-compose, run:
+   `docker-compose up`
+
+3. To tear down, run:
+   `docker-compose down -v `
+   (-v removes the volumes as well)
 
 **Automatic Testing**
 

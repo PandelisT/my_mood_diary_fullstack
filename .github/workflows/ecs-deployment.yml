@@ -72,7 +72,7 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: aws-task-definition.json
-        container-name: Flask-App-Mood
+        container-name: Flask-Mood-App
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition

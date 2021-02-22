@@ -2,4 +2,3 @@
 __pycache__
 db.sqlite
 venv
-aws-task-definition.json
