@@ -22,14 +22,14 @@ class Config(object):
             raise ValueError("AWS_SECRET_ACCESS_KEY is not set")
         return value
 
-    @property
-    def AWS_S3_BUCKET(self):
-        value = os.getenv('AWS_S3_BUCKET')
+    # @property
+    # def AWS_S3_BUCKET(self):
+    #     value = os.getenv('AWS_S3_BUCKET')
 
-        if not value:
-            raise ValueError("AWS_S3_BUCKET is not set")
+    #     if not value:
+    #         raise ValueError("AWS_S3_BUCKET is not set")
 
-        return value
+    #     return value
 
 
 class DevelopmentConfig(Config):
@@ -38,14 +38,14 @@ class DevelopmentConfig(Config):
     @property
     def SQLALCHEMY_DATABASE_URI(self):
         # DB_URI for local development
-        # value = f'''postgresql+psycopg2://{os.getenv(
-        #    'DB_USER')}:{os.getenv(
-        #    'DB_PASSWORD')}@{os.getenv(
-        #    'DB_HOST')}/{os.getenv(
-        #    'DB_NAME')}'''
+        value = f'''postgresql+psycopg2://{os.getenv(
+           'DB_USER')}:{os.getenv(
+           'DB_PASSWORD')}@{os.getenv(
+           'DB_HOST')}/{os.getenv(
+           'DB_NAME')}'''
 
         # DB_URI for Docker
-        value = f"{os.getenv('DB_URI')}"
+        # value = f"{os.getenv('DB_URI')}"
 
         if not value:
             raise ValueError("DB_URI is not set")
@@ -54,12 +54,13 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
+    
     @property
-    def JWT_SECRET_KEY(self):
-        value = os.getenv("JWT_SECRET_KEY")
+    def SQLALCHEMY_DATABASE_URI(self):
+        value = f"{os.getenv('DB_URI')}"
 
         if not value:
-            raise ValueError("JWT Secret Key is not set")
+            raise ValueError("DB_URI is not set")
 
         return value
 
