@@ -109,11 +109,8 @@ class TestAuthMoodApp(unittest.TestCase):
                                     data=journal_data, follow_redirects=True)
 
         journal_entry = Journal.query.first()
-        response = self.client.post(f'''journal/journal-entries/
-                                    {journal_entry.id}''',
+        response = self.client.post(f"journal/journal-entries/{journal_entry.id}", 
                                     follow_redirects=True)
-
-        journal_entry = Journal.query.first()
 
         self.assertEqual(response.status_code, 200)
         self.assertNotIn("test entry", str(response.data))

@@ -84,8 +84,8 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertIn("test problem area", str(response.data))
 
         problem = ProblemArea.query.first()
-        response = self.client.get(f'''problem_area/problem_area_entry/
-            {problem.id}''')
+        response = self.client.get(f"problem_area/problem_area_entry/{problem.id}",
+                                    follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn('test problem area', str(response.data))
 
