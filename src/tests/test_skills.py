@@ -1,5 +1,4 @@
 import unittest
-import os
 from main import create_app, db
 from models.Skill import Skill
 
@@ -108,7 +107,7 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertIn("test skill", str(response.data))
 
         skills = Skill.query.all()
-        response = self.client.get(f"skill/skill_entries")
+        response = self.client.get("skill/skill_entries")
         self.assertEqual(response.status_code, 200)
         self.assertIn('test skill', str(response.data))
         self.assertIsInstance(skills, list)

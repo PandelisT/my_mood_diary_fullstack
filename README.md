@@ -222,7 +222,11 @@ To run the coverage module for the unittests in this application, change the env
 
 To get the report for the test coverage, run `coverage report -m`
 
-Test coverage at the time of writing is 44%.
+In this application, run this command to only test the coverage of the code and not the virtual environment:
+
+`coverage report -m commands.py controllers/__init__.py controllers/auth.py controllers/journal.py controllers/main.py controllers/problemareas.py controllers/psychologist.py controllers/skills.py default_settings.py forms/forms.py main.py models/Journal.py models/ProblemArea.py models/Psychologist.py models/Skill.py models/User.py tests/test_auth.py tests/test_journal.py tests/test_problemareas.py tests/test_profile.py tests/test_skills.py`
+
+Test coverage at the time of writing is 86%.
 
 ## **Code quality using flake8**
 

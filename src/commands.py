@@ -1,6 +1,5 @@
 from main import db
 from flask import Blueprint
-from werkzeug.security import generate_password_hash
 
 
 db_commands = Blueprint("db-custom", __name__)
@@ -21,5 +20,4 @@ def drop_db():
 
 @db_commands.cli.command("seed")
 def seed_db():
-    from models.User import User
-    from models.Journal import Journal
+    pass

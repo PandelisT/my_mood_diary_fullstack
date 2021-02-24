@@ -54,7 +54,7 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
-    
+
     @property
     def SQLALCHEMY_DATABASE_URI(self):
         value = f"{os.getenv('DB_URI')}"

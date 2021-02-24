@@ -1,5 +1,4 @@
 import unittest
-import os
 from main import create_app, db
 
 
@@ -48,7 +47,6 @@ class TestAuthMoodApp(unittest.TestCase):
             'password': 'testing'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-
 
     def test_log_in_page(self):
         response = self.client.get('/login')

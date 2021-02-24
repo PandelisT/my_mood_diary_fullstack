@@ -1,5 +1,4 @@
 import unittest
-import os
 from main import create_app, db
 from models.Journal import Journal
 
@@ -59,7 +58,7 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("Journal entries", str(response.data))
         self.assertIn("test entry", str(response.data))
-    
+
     def test_get_journal(self):
         response = self.client.post('/signup', data={
             'email': 'pandeli@test.com',
@@ -75,13 +74,13 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post("/journal/new_entry", data={
-            'journal_entry': 'test entry', 
+            'journal_entry': 'test entry',
             'user_id_fk': 1
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Journal entries", str(response.data))
         self.assertIn("test entry", str(response.data))
-    
+
         journal = Journal.query.first()
         response = self.client.get(f"journal/journal-entry/{journal.id}")
         self.assertEqual(response.status_code, 200)
@@ -100,20 +99,22 @@ class TestAuthMoodApp(unittest.TestCase):
             'password': 'testing'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        
+
         journal_data = {
             'journal_entry': 'test entry',
             'user_id_fk': 1
         }
 
         response = self.client.post("/journal/new_entry",
-        data = journal_data, follow_redirects=True)
+                                    data=journal_data, follow_redirects=True)
 
         journal_entry = Journal.query.first()
-        response = self.client.post(f"journal/journal-entries/{journal_entry.id}", follow_redirects=True)
-        
+        response = self.client.post(f'''journal/journal-entries/
+                                    {journal_entry.id}''',
+                                    follow_redirects=True)
+
         journal_entry = Journal.query.first()
-               
+
         self.assertEqual(response.status_code, 200)
         self.assertNotIn("test entry", str(response.data))
 
@@ -132,15 +133,15 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post("/journal/new_entry", data={
-            'journal_entry': 'test entry', 
+            'journal_entry': 'test entry',
             'user_id_fk': 1
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Journal entries", str(response.data))
         self.assertIn("test entry", str(response.data))
-    
+
         journals = Journal.query.all()
-        response = self.client.get(f"journal/journal-entries")
+        response = self.client.get("journal/journal-entries")
         self.assertEqual(response.status_code, 200)
         self.assertIn("test entry", str(response.data))
         self.assertIsInstance(journals, list)
