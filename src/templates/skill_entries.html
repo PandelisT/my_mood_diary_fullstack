@@ -5,15 +5,14 @@
 {% block content %}
 
 
-  <section class="hero is-large has-text-centered is-justify-content-center" style="background-image: url(/static/images/psych-1.jpg); width:100%; margin:auto; background-size: cover; opacity: 0.8; background-position: center center; background-repeat: no-repeat;" >
-    <div class="hero-body has-text-centered is-align-items-center is-justify-content-center" >
+  <section class="hero is-large"  >
+    <div class="hero-body" style="background-image: url(/static/images/psych-1.jpg); width:100%; height: 400px; margin:auto; background-size: cover; opacity: 0.8; background-position: center center; background-repeat: no-repeat;" >
   
-      <p class="title is-size-1 has-text-weight-bold " style= "transform:translateY(-50%); top: 50%;">
+      <p class="title is-size-1 has-text-weight-bold" style="transform:translateY(-50%); top: 50%;">
         Skills
       </p>
     </div>
   </section>
-  <!-- <img src="{{ url_for('static', filename = 'images/psych-1.jpg') }}" alt=""> -->
 <div class="has-text-justified">
 <p>
 Thoughts, emotions and behaviours are all intertwined whereby negative thoughts can trigger negative behaviours. 
@@ -36,7 +35,7 @@ Skills are designed at the individual level to replace the negative moods, thoug
     <button class="button is-block is-info is-large">Add entry</button>
 </form>
 
-
+<br>
 {% for skill_entry in skill_entries %}
 <div class="box has-background-light">
 <div class="columns has-text-left">

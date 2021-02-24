@@ -22,6 +22,7 @@ def drop_db():
 @db_commands.cli.command("seed")
 def seed_db():
     from models.User import User
+    from models.Journal import Journal
 
     u1 = User()
     u1.email = "pandeli@test.com"
@@ -30,3 +31,10 @@ def seed_db():
     db.session.add(u1)
     db.session.commit()
     print("User table seeded")
+
+    journal = Journal()
+    journal.journal_entry = "Test Entry from seeding"
+    journal.user_id_fk = 1
+    db.session.add(journal)
+    db.session.commit()
+    print("Journal table seeded")

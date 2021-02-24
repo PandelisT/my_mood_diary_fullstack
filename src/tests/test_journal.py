@@ -59,8 +59,8 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("Journal entries", str(response.data))
         self.assertIn("test entry", str(response.data))
-
-    def test_delete_journal(self):
+    
+    def test_get_journal(self):
         response = self.client.post('/signup', data={
             'email': 'pandeli@test.com',
             'name': 'Pandelis',
@@ -75,11 +75,44 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post("/journal/new_entry", data={
-            'journal_entry': 'test entry',
+            'journal_entry': 'test entry', 
+            'user_id_fk': 1
         }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Journal entries", str(response.data))
+        self.assertIn("test entry", str(response.data))
+    
+        journal = Journal.query.first()
+        response = self.client.get(f"journal/journal-entry/{journal.id}")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("test entry", str(response.data))
+
+    def test_delete_journal(self):
+        response = self.client.post('/signup', data={
+            'email': 'pandeli@test.com',
+            'name': 'Pandelis',
+            'password': 'testing'
+        })
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.post('/login', data={
+            'email': 'pandeli@test.com',
+            'password': 'testing'
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        
+        journal_data = {
+            'journal_entry': 'test entry',
+            'user_id_fk': 1
+        }
+
+        response = self.client.post("/journal/new_entry",
+        data = journal_data, follow_redirects=True)
 
         journal_entry = Journal.query.first()
         response = self.client.post(f"journal/journal-entries/{journal_entry.id}", follow_redirects=True)
+        
+        journal_entry = Journal.query.first()
                
         self.assertEqual(response.status_code, 200)
         self.assertNotIn("test entry", str(response.data))
