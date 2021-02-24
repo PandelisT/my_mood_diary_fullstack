@@ -35,11 +35,11 @@ The target audience is clients who see a psychologist for any issue from addicti
 
 My tech stack includes:
 
-PostgreSQL database in AWS RDS
-Python Flask with Jinja2 templates
-HTML/CSS in Jinja2 templates
-AWS ECS and ECR for deployment (see cloud architecture diagram below)
-Docker to create images of Flask App
+- PostgreSQL database in AWS RDS
+- Python Flask with Jinja2 templates
+- HTML/CSS in Jinja2 templates
+- AWS ECS and ECR for deployment (see cloud architecture diagram below)
+- Docker to create images of Flask App
 
 ## **Running the app locally**
 
@@ -227,3 +227,55 @@ Test coverage at the time of writing is 44%.
 ## **Code quality using flake8**
 
  Run `flake8 models controllers forms tests commands.py default_settings.py main.py` to view styling and other Python errors such as redundant imports.
+
+
+**Steps to set up ECR, ECS and RDS**
+
+1. Create new IAM user (for e.g. docker-ecr). Give full access to ECR (and ECS if you want to run a deployment from GitHub using Actions). Download and save AWS keys.
+
+2. Set up profile `aws configure --profile docker-ecs` and add the AWS keys with your default region for e.g. ap-southeast-2
+
+3. Run `aws --profile docker-ecr ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 415358402816.dkr.ecr.ap-southeast-2.amazonaws.com` . The URL at the end is the ECR endpoint. Note: For WSL, if the login doesn't work, try another terminal window. NEED TO BE IN c/USERs NOT linux file system to work.
+
+4. Build the docker image of your app by running `docker build -t updated-flask-mood-app .`
+
+5. `docker tag updated-flask-mood-app 415358402816.dkr.ecr.ap-southeast-2.amazonaws.com/updated-flask-mood-app`
+
+6. `docker push 415358402816.dkr.ecr.ap-southeast-2.amazonaws.com/updated-flask-mood-app`
+
+7. Create private RDS database within a new VPC for e.g. vpc-00dabdc5e5a40feae. Take a note of the DNS name and the database name as this will be set ad DB_URI in the Task Definition for your ECS cluster.
+
+8. Create Task Definition. In the Container Definitions make sure that the URI to your image is correct from ECR. Add 8000 and 5432 to the port mappings section and in the advanced configuration add the environment variables.
+
+9. Create Cluster with 2x t2.micro instances (note: if you want to update the app with GitHub Actions, your instance might be too small and you'll need to update it to t2.small, see Additional Information below). Make sure you select a key pair because you'll need to SSH into your EC2 instances. Select the VPC that your RDS database is in and all the subnets available. Create the cluster.
+
+10. Create Service by clicking the cluster and select Create under Services tab. Choose EC2 launch type, choose the task definition from step 8.  Name the service and add 2 tasks. Then you need to create a load balancer.
+
+11. Create a Application Load Balancer in the VPC of the database and the cluster. Delete the listeners that get added as ECS will configure this for you. Edit the security group to include Port 8000 and Port 5432.
+
+12. Add the load balancer to the service with listener port 80 and finalise the service.
+
+13. There should be 2 tasks running in your service. If not, check that the task definition is correct and check the health status of the instances. If they are constantly draining there is an issue with your app. See troubleshooting guide below.
+
+14. Access the load balancer through the DNS name.
+
+
+    **Troubleshooting:** 
+
+    - Error or Bad gateway (502/503 error) or health status check failing: ssh into an EC2 instance, get container id from `docker ps -a`, run  docker logs <container-ID>. The latest error will be there to view. You might have missed an environment variable which is needed for the application to run.
+    - If load balancer is accessible but your application times out when trying to sign up or log in that means your app cannot connect to the database due to a security group issue. In this case, make sure that your security groups allow access on Port 5432 and then connect to the docker container and run `flask db-custom drop` and `flask db upgrade` to make sure the migrations have occurred.
+
+
+**Additional information**
+
+Updating EC2 instance types with no down time:
+
+1. Create a copy of the **Launch Configuration** used by your **Auto Scaling Group**, including any changes you want to make.
+2. Edit the **Auto Scaling Group** to:
+   - Use the new **Launch Configuration**
+   - Desired Capacity = Desired Capacity * 2
+   - Min = Desired Capacity
+3. Wait for all new instances to become **'ACTIVE'** in the ECS Instances tab of the ECS Cluster
+4. Select the old instances and click **Actions** -> **Drain Instances**
+5. Wait until all the old instances are running **0 tasks**.
+6. Edit the **Auto Scaling Group** and change Min and Desired back to their original values.
