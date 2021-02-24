@@ -48,3 +48,58 @@ class TestAuthMoodApp(unittest.TestCase):
             'password': 'testing'
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
+
+
+    def test_log_in_page(self):
+        response = self.client.get('/login')
+        self.assertEqual(response.status_code, 200)
+
+    def test_signup_page(self):
+        response = self.client.get('/signup')
+        self.assertEqual(response.status_code, 200)
+
+    def test_log_in_incorrect(self):
+        response = self.client.post('/signup', data={
+            'email': 'pandeli@test.com',
+            'name': 'Pandelis',
+            'password': 'testing'
+        })
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.post('/login', data={
+            'email': 'pandeli@test.com',
+            'password': 'test'
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_sign_up_twice(self):
+        response = self.client.post('/signup', data={
+            'email': 'pandeli@test.com',
+            'name': 'Pandelis',
+            'password': 'testing'
+        })
+
+        response = self.client.post('/signup', data={
+            'email': 'pandeli@test.com',
+            'name': 'Pandelis',
+            'password': 'testing'
+        })
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_log_out(self):
+        response = self.client.post('/signup', data={
+            'email': 'pandeli@test.com',
+            'name': 'Pandelis',
+            'password': 'testing'
+        })
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.post('/login', data={
+            'email': 'pandeli@test.com',
+            'password': 'testing'
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/logout')
+        self.assertEqual(response.status_code, 302)

@@ -23,18 +23,3 @@ def drop_db():
 def seed_db():
     from models.User import User
     from models.Journal import Journal
-
-    u1 = User()
-    u1.email = "pandeli@test.com"
-    u1.name = "Pandelis"
-    u1.password = generate_password_hash("password", method='sha256')
-    db.session.add(u1)
-    db.session.commit()
-    print("User table seeded")
-
-    journal = Journal()
-    journal.journal_entry = "Test Entry from seeding"
-    journal.user_id_fk = 1
-    db.session.add(journal)
-    db.session.commit()
-    print("Journal table seeded")

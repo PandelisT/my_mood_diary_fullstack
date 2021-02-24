@@ -229,7 +229,15 @@ Test coverage at the time of writing is 44%.
  Run `flake8 models controllers forms tests commands.py default_settings.py main.py` to view styling and other Python errors such as redundant imports.
 
 
-**Steps to set up ECR, ECS and RDS**
+## **CI/CD Pipeline**
+
+There are currently two workflows on GitHub Actions for this application which are in two separate yml files in the .github/workflows directory:
+
+1. Testing suite which runs automatically every time changes are pushed up to GitHub.
+2. Manual workflow which pushes changes in the application to ECR and ECS on AWS.
+
+
+## **Steps to set up ECR, ECS and RDS**
 
 1. Create new IAM user (for e.g. docker-ecr). Give full access to ECR (and ECS if you want to run a deployment from GitHub using Actions). Download and save AWS keys.
 
@@ -260,10 +268,10 @@ Test coverage at the time of writing is 44%.
 14. Access the load balancer through the DNS name.
 
 
-    **Troubleshooting:** 
+**Troubleshooting:** 
 
-    - Error or Bad gateway (502/503 error) or health status check failing: ssh into an EC2 instance, get container id from `docker ps -a`, run  docker logs <container-ID>. The latest error will be there to view. You might have missed an environment variable which is needed for the application to run.
-    - If load balancer is accessible but your application times out when trying to sign up or log in that means your app cannot connect to the database due to a security group issue. In this case, make sure that your security groups allow access on Port 5432 and then connect to the docker container and run `flask db-custom drop` and `flask db upgrade` to make sure the migrations have occurred.
+- Error or Bad gateway (502/503 error) or health status check failing: ssh into an EC2 instance, get container id from `docker ps -a`, run  docker logs <container-ID>. The latest error will be there to view. You might have missed an environment variable which is needed for the application to run.
+- If load balancer is accessible but your application times out when trying to sign up or log in that means your app cannot connect to the database due to a security group issue. In this case, make sure that your security groups allow access on Port 5432 and then connect to the docker container and run `flask db-custom drop` and `flask db upgrade` to make sure the migrations have occurred.
 
 
 **Additional information**
