@@ -70,19 +70,6 @@ def update_journal_entry(journal_id):
     return redirect(url_for('journal.get_journal_entries'))
 
 
-# @journal.route("/journal-entry/update/<int:journal_id>", methods=["POST"])
-# @login_required
-# def update_single_journal_entry(journal_id):
-#     form = AddJournalEntryForm()
-#     user_id = current_user._get_current_object()
-#     user = user_id.id
-#     update_journal_entry = Journal.query.filter_by(user_id_fk=user,
-#                                                    id=journal_id).first()
-#     update_journal_entry.journal_entry = form.journal_entry.data
-#     db.session.commit()
-#     return render_template('journal_entry.html',
-#                            journal_entry=update_journal_entry)
-
 @journal.route("/journal-entry/update/<int:journal_id>", methods=["POST"])
 @login_required
 def update_single_journal_entry(journal_id):
@@ -94,24 +81,3 @@ def update_single_journal_entry(journal_id):
     db.session.commit()
     return render_template('journal_entry.html',
                            journal_entry=update_journal_entry)
-
-
-# @animals.route("/update/<int:id>", methods=["POST"])
-# @login_required
-# def animal_update(id):
-#     animal = Animal.query.get(id)
-
-#     shelter = Shelter.query.filter_by(id=animal.shelter_id, user_id=current_user.id).first()
-
-#     if not shelter:
-#         return abort(400, description= "Not authorised, this animal does not belong to your shelter")
-
-#     #start updating the values of the shelter according to the form
-#     animal.name = request.form.get("name")
-#     animal.kind = request.form.get("kind")
-#     animal.breed = request.form.get("breed")
-#     animal.age = request.form.get("age")
-#     shelter.user_id = current_user.id
-#     #save the changes
-#     db.session.commit()
-#     return redirect(url_for('animals.animal_index'))

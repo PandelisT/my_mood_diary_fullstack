@@ -54,6 +54,13 @@
     <h3 class="title">Change Password</h3>
     <div class="box">
         {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <div class="notification is-danger">
+                  {{ messages[0] }}
+              </div>
+          {% endif %}
+          {% endwith %}
         <form action="{{ url_for('main.user_password_change') }}"  method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="field">

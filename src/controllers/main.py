@@ -3,7 +3,6 @@ from flask import Blueprint, render_template, redirect
 from flask import url_for, request, flash
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
-from forms.forms import RegistrationForm
 
 
 main = Blueprint('main', __name__)
@@ -23,7 +22,6 @@ def profile():
 @main.route('/profile', methods=["POST"])
 @login_required
 def user_password_change():
-    form = RegistrationForm()
     user_id = current_user._get_current_object()
     password = request.form.get('password')
     if len(password) < 6:
