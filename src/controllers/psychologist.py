@@ -26,7 +26,7 @@ def post_psychologist_details():
                            name=current_user.name)
 
 
-@psychologist.route("/psychologist", methods=["GET"])
+@psychologist.route("/", methods=["GET"])
 @login_required
 def get_all_psychologists():
     user_id = current_user._get_current_object()

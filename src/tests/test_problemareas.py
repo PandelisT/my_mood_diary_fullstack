@@ -61,6 +61,34 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertIn("Problem Areas", str(response.data))
         self.assertIn("test problem area", str(response.data))
 
+    def test_delete_problemareas(self):
+        response = self.client.post('/signup', data={
+            'email': 'pandeli@test.com',
+            'name': 'Pandelis',
+            'password': 'testing'
+        })
+        self.assertEqual(response.status_code, 302)
+
+        response = self.client.post('/login', data={
+            'email': 'pandeli@test.com',
+            'password': 'testing'
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.post("/problem_area/new_entry", data={
+            'problem_area_entry': 'test problem area',
+        }, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Problem Areas", str(response.data))
+        self.assertIn("test problem area", str(response.data))
+
+        problem_entry = ProblemArea.query.first()
+        response = self.client.post(f"problem_area/problem_area_entries/{problem_entry.id}",
+                                    follow_redirects=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn("test problem area", str(response.data))
+
     def test_get_problemarea(self):
         response = self.client.post('/signup', data={
             'email': 'pandeli@test.com',
@@ -82,10 +110,9 @@ class TestAuthMoodApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("Problem Areas", str(response.data))
         self.assertIn("test problem area", str(response.data))
-
         problem = ProblemArea.query.first()
         response = self.client.get(f"problem_area/problem_area_entry/{problem.id}",
-                                    follow_redirects=True)
+                                   follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn('test problem area', str(response.data))
 

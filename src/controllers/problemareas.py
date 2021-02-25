@@ -62,21 +62,6 @@ def delete_problem_area_entry(problem_area_id):
     return redirect(url_for('problem_area.get_problem_area_entries'))
 
 
-@problem_area.route("/problem_area_entries/update/<int:problem_area_id>",
-                    methods=["POST"])
-@login_required
-def update_problem_area_entry(problem_area_id):
-    form = AddProblemAreaEntryForm()
-    user_id = current_user._get_current_object()
-    user = user_id.id
-    update_problem_area_entry = ProblemArea.query.filter_by(
-        user_id_fk=user,
-        id=problem_area_id).first()
-    update_problem_area_entry.problem_area_entry = form.problem_area_entry.data
-    db.session.commit()
-    return redirect(url_for('problem_area.get_problem_area_entries'))
-
-
 @problem_area.route("/problem_area_entry/update/<int:problem_area_id>",
                     methods=["POST"])
 @login_required

@@ -25,6 +25,14 @@
 </form>
 
 
+<form action="{{  url_for('journal.query_journal') }}"  method="GET">
+    <label for="entry">Select the Date to see all entries of that day:</label>
+    <input type="date" id="entry" name="entry">
+    <br>
+    <div class="buttons is-centered">
+    <input class="button is-info is-small box has-text-centered" type="submit" value="Submit">
+    </div>
+  </form>
 
 <br>
 {% for journal_entry in journal_entries %}

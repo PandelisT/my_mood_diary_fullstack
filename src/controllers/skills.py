@@ -58,19 +58,6 @@ def delete_skill_entry(skill_id):
     return redirect(url_for('skill.get_skill_entries'))
 
 
-@skill.route("/skill_entries/update/<int:skill_id>", methods=["POST"])
-@login_required
-def update_skill_entry(skill_id):
-    form = AddSkillEntryForm()
-    user_id = current_user._get_current_object()
-    user = user_id.id
-    update_skill_entry = Skill.query.filter_by(
-        user_id_fk=user, id=skill_id).first()
-    update_skill_entry.skill_entry = form.skill_entry.data
-    db.session.commit()
-    return redirect(url_for('skill.get_skill_entries'))
-
-
 @skill.route("/skill_entry/update/<int:skill_id>", methods=["POST"])
 @login_required
 def update_single_skill_entry(skill_id):

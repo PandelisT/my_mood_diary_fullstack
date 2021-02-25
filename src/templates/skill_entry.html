@@ -17,7 +17,7 @@
     <div class="column">
         <form action="{{ url_for('skill.update_single_skill_entry', skill_id=skill_entry.id) }}" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <input class="input" type="text" name="skill_entry" value="{{skill_entry_skill_entry }}">
+                    <input class="input" type="text" name="skill_entry" value="{{skill_entry.skill_entry }}">
                     <button class="button is-block is-info is-medium">Edit entry</button>
         </form>
     </div>
