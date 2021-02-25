@@ -3,6 +3,7 @@
 ## **Description**
 
 **\- Purpose**
+
 The purpose of this application is to track the thoughts, problem areas and skills for clients who see a psychologist for various issues. The range of issues can include mental health, drug and alcohol addictions, food disorders etc. This application will allow the users (clients) to journal their thoughts and track their problem areas and skills in conjunction with a psychologist who will assist in the implementation of the app for their clients.
 
 Behavioural activation is engaging in positive activities to boost mood. This is a therapeutic strategy for treating depression. Part of this strategy needs you to monitor your daily activities and systematically schedule in activities throughout your day. For more information: https://www.psychologytools.com/self-help/behavioral-activation/

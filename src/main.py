@@ -12,7 +12,7 @@ db = SQLAlchemy()
 csrf = CsrfProtect()
 migrate = Migrate()
 login_manager = LoginManager()
-MIGRATION_DIR = os.path.join('src', 'migrations')
+MIGRATION_DIR = os.path.join('.', 'migrations')
 
 
 def create_app():
