@@ -36,7 +36,7 @@ class TestAuthMoodApp(unittest.TestCase):
 
         response = self.client.get("/journal/journal-entries")
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Journal entries", str(response.data))
+        self.assertIn("My Journal", str(response.data))
 
     def test_post_journal(self):
         response = self.client.post('/signup', data={
@@ -56,7 +56,7 @@ class TestAuthMoodApp(unittest.TestCase):
             'journal_entry': 'test entry',
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Journal entries", str(response.data))
+        self.assertIn("My Journal", str(response.data))
         self.assertIn("test entry", str(response.data))
 
     def test_get_journal(self):
@@ -78,7 +78,7 @@ class TestAuthMoodApp(unittest.TestCase):
             'user_id_fk': 1
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Journal entries", str(response.data))
+        self.assertIn("My Journal", str(response.data))
         self.assertIn("test entry", str(response.data))
 
         journal = Journal.query.first()
@@ -134,7 +134,7 @@ class TestAuthMoodApp(unittest.TestCase):
             'user_id_fk': 1
         }, follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn("Journal entries", str(response.data))
+        self.assertIn("My Journal", str(response.data))
         self.assertIn("test entry", str(response.data))
 
         journals = Journal.query.all()
