@@ -7,6 +7,13 @@
   Welcome, {{ name }}!
 </h1>
 
+<h1>File Upload</h1>
+<form method="POST" action="{{ url_for('profile_images.profile_image_create') }}" enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <p><input type="file" name="file"></p>
+  <p><input type="submit" value="Submit"></p>
+</form>
+
 <div class="column is-4 is-offset-4">
   <h4 class="title">Add psychologist details</h4>
   <div class="box">

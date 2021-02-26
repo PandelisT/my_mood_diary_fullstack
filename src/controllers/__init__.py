@@ -4,7 +4,7 @@ from controllers.journal import journal
 from controllers.psychologist import psychologist
 from controllers.skills import skill
 from controllers.problemareas import problem_area
-
+from controllers.profileimage import profile_images
 
 registerable_controllers = [
     auth,
@@ -12,5 +12,6 @@ registerable_controllers = [
     journal,
     psychologist,
     skill,
-    problem_area
+    problem_area,
+    profile_images
 ]

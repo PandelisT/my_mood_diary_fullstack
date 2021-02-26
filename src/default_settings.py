@@ -22,14 +22,14 @@ class Config(object):
             raise ValueError("AWS_SECRET_ACCESS_KEY is not set")
         return value
 
-    # @property
-    # def AWS_S3_BUCKET(self):
-    #     value = os.getenv('AWS_S3_BUCKET')
+    @property
+    def AWS_S3_BUCKET(self):
+        value = os.getenv('AWS_S3_BUCKET')
 
-    #     if not value:
-    #         raise ValueError("AWS_S3_BUCKET is not set")
+        if not value:
+            raise ValueError("AWS_S3_BUCKET is not set")
 
-    #     return value
+        return value
 
 
 class DevelopmentConfig(Config):
